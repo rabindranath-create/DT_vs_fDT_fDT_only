@@ -10,13 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        script: [
-           "0", "2.5", "5", "7.5", "10", 
-           "12.5", "15", "17.5", "20", 
-           "22.5", "25", "27.5", "30"
-        ]
+        A: ["0","2.5","5","7.5","10","12.5","15","17.5","20","22.5","25","27.5","30"]
+        B: [1,2,3,4,5,6,7,8,9,10,
+            11,12,13,14,15,16,17,18,19,20]
 
-    name: Run main_script${{ matrix.script }}.R
+    name: Run main_script${{ matrix.A }}_${{ matrix.B }}.R
 
     steps:
       - name: Checkout repository
@@ -27,18 +25,19 @@ jobs:
 
       - name: Install required R packages
         run: |
-          Rscript -e 'install.packages(c("spatial", "spatstat", "igraph", "dplyr"), repos = "https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("spatial","spatstat","igraph","dplyr"), repos="https://cloud.r-project.org")'
 
-      - name: Run R script main_script${{ matrix.script }}.R
-        run: Rscript main_script${{ matrix.script }}.R
-
-      - name: List outputs for script${{ matrix.script }}
+      - name: Run R script
         run: |
-          echo "Listing output files for script${{ matrix.script }}:"
-          find outputs/script${{ matrix.script }} -type f || echo "No output files found."
+          Rscript main_script${{ matrix.A }}_${{ matrix.B }}.R
 
-      - name: Upload output files for script${{ matrix.script }}
+      - name: List outputs
+        run: |
+          echo "Listing output files:"
+          find outputs/script${{ matrix.A }}_${{ matrix.B }} -type f || echo "No output files found."
+
+      - name: Upload output files
         uses: actions/upload-artifact@v4
         with:
-          name: results-script${{ matrix.script }}
-          path: outputs/script${{ matrix.script }}/
+          name: results-script${{ matrix.A }}_${{ matrix.B }}
+          path: outputs/script${{ matrix.A }}_${{ matrix.B }}/
