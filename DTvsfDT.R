@@ -738,11 +738,19 @@ DT_vs_fDT_Alg <- function(obs_info, dt){
 
 
 
+
+
+
 #############
 #DT only for save
 ###########
 
 DT_Alg_save <- function(obs_info){
+  
+  ##
+  #count when it disambiguate
+  ##
+  
   
   
   output_Ginfo <- Update_graph_intersect_DT(G_original, x, y, obs_info, r)
@@ -811,7 +819,9 @@ DT_Alg_save <- function(obs_info){
     
     action_edge <- which.min(df_edge_ed[,4])
     
-    explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    #explored_node
+    #explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    explored_node <- c(df_edge_ed$outside_vertex[action_edge])
     
     ########
     #END: DT finding optimal action 
@@ -957,7 +967,9 @@ fDT_Alg_save <- function(obs_info, dt){
     
     action_edge <- which.min(df_edge_ed[,4])
     
-    explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    #
+    #explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    explored_node <- c(df_edge_ed$outside_vertex[action_edge])
     
     ########
     #END: DT finding optimal action 
