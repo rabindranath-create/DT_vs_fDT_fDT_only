@@ -962,7 +962,9 @@ fDT_Alg_save <- function(obs_info, dt){
     
     action_edge <- which.min(df_edge_ed[,4])
     
-    explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    #explored_node <- c(explored_node, df_edge_ed$outside_vertex[action_edge])
+    explored_node <- c(df_edge_ed$outside_vertex[action_edge])
+
     
     ########
     #END: DT finding optimal action 
